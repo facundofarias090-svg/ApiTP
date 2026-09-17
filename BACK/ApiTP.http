@@ -1,0 +1,6 @@
+@ApiTP_HostAddress = http://localhost:5148
+
+GET {{ApiTP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

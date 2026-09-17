@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP FACUNDO FARIAS</title>
+
+    <link rel="stylesheet" href="bootstrap/bootstrap-5.3.8-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+    <!-- bienvenida -->
+    <section class="bienvenida">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>TP FACUNDO FARIAS</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="cuestionario">
+        <h2>Ingresar nuevo Auto</h2>
+        <form id="autoCuestionario" class="row g-3">
+            <div class="col-md-3">
+                <label for="marca" class="form-label">Marca:</label>
+                <input type="text" class="form-control" id="marca" required>
+            </div>
+
+            <div class="col-md-3">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" class="form-control" id="modelo" required>
+            </div>
+
+            <div class="col-md-3">
+                <label for="anio" class="form-label">Año:</label>
+                <input type="number" class="form-control" id="anio" required>
+            </div>
+
+             <div class="col-md-3">
+                <label for="patente" class="form-label">Patente:</label>
+                <input type="text" class="form-control" id="patente" required>
+            </div>
+
+            <div class="col-md-3">
+                <label for="kilometraje" class="form-label">Kilometraje:</label>
+                <input type="number" class="form-control" id="kilometraje" required>
+            </div>
+
+            <div class="col-md-3">
+                <label for="estado" class="form-label">Estado:</label>
+                <select class="form-select" id="estado" required>
+                    <option value="Disponible">Disponible</option>
+                    <option value="No Disponible">No Disponible</option>
+                </select>
+            </div>
+
+            <div class="col-md-12">
+                <button type="submit" class="boton">Agregar Auto</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="listado">
+        <h2 class="espacio">Listado de Autos</h2>
+        <table class="table table-striped" id="autosTable">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Patente</th>
+                    <th>Kilometraje</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="autosTableBody">
+                <!--  -->
+            </tbody>
+        </table>
+    </section>
+
+
+
+    
+    <script src="js/auto.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script src="bootstrap/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
