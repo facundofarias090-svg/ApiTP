@@ -257,3 +257,4 @@ C:\Users\Facundo\Desktop\ApiTP\BACK\obj\Debug\net8.0\refint\ApiTP.dll
 C:\Users\Facundo\Desktop\ApiTP\BACK\obj\Debug\net8.0\ApiTP.pdb
 C:\Users\Facundo\Desktop\ApiTP\BACK\obj\Debug\net8.0\ApiTP.genruntimeconfig.cache
 C:\Users\Facundo\Desktop\ApiTP\BACK\obj\Debug\net8.0\ref\ApiTP.dll
+C:\Users\Facundo\Desktop\ApiTP\back\obj\Debug\net8.0\ApiTP.sourcelink.json

@@ -26,9 +26,18 @@
 }
 
 .listado{
-    background-color: #756f6f;
+    background-color: #ccbdbd;
 }
 
 .espacio{
     padding: 10px;
+}
+
+/* #autosTable tbody {
+  background-color: #363a3d;
+} */
+
+.modal-content {
+  background-color: #5e5c5c;
+  color: rgb(12, 12, 12);
 }

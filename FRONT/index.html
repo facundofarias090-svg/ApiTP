@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="bootstrap/bootstrap-5.3.8-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 
@@ -38,7 +40,7 @@
                 <input type="number" class="form-control" id="anio" required>
             </div>
 
-             <div class="col-md-3">
+            <div class="col-md-3">
                 <label for="patente" class="form-label">Patente:</label>
                 <input type="text" class="form-control" id="patente" required>
             </div>
@@ -72,7 +74,9 @@
                     <th>Año</th>
                     <th>Patente</th>
                     <th>Kilometraje</th>
+                    <th>Fecha Ingreso</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="autosTableBody">
@@ -81,11 +85,68 @@
         </table>
     </section>
 
+<!-- modal -->
+    <section>
+
+    <div class="modal fade" id="modal-editar-auto" tabindex="-1" aria-labelledby="modal-editar-auto-label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="form-editar-auto">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-editar-auto-label">Editar auto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="editar-Marca" class="form-label">Marca</label>
+                                <input type="text" id="editar-Marca" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editar-Modelo" class="form-label">Modelo</label>
+                                <input type="text" id="editar-Modelo" class="form-control" required>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="editar-Año" class="form-label">Año</label>
+                                    <input type="text" id="editar-Año" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editar-Patente" class="form-label">Patente</label>
+                                    <input type="text" id="editar-Patente" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="editar-Kilometraje" class="form-label">Kilometraje</label>
+                                    <input type="text" id="editar-Kilometraje" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label for="editar-stock" class="form-label">Estado</label>
+                                <select id="editar-stock" class="form-control" required>
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="No Disponible">No Disponible</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+    </div>
+
+    </section>
 
 
-    
-    <script src="js/auto.js"></script>
+
     <script src="js/jquery-4.0.0.min.js"></script>
     <script src="bootstrap/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auto.js"></script>
 </body>
+
 </html>
