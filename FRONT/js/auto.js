@@ -1,4 +1,5 @@
 let autoEnEdicion = null;
+let botonEditarActivo = null;
 
 const obtenerValor = (auto, clave) => auto?.[clave] ?? auto?.[clave.charAt(0).toUpperCase() + clave.slice(1)] ?? "";
 
@@ -57,15 +58,16 @@ function MostrarDatos(datos) {
         const tdAcciones = tr.insertCell(7);
         tdAcciones.className = "acciones-cell";
 
-        const btnEditar = crearBoton("Editar", "btn btn-primary btn-sm", () => abrirModalEdicion(auto));
+        const btnEditar = crearBoton("Editar", "btn btn-primary btn-sm", (event) => abrirModalEdicion(auto, event.currentTarget));
         const btnEliminar = crearBoton("Eliminar", "btn btn-danger btn-sm", () => eliminarAuto(autoId));
 
         tdAcciones.append(btnEditar, btnEliminar);
     });
 }
 
-function abrirModalEdicion(auto) {
+function abrirModalEdicion(auto, botonEditar) {
     autoEnEdicion = auto;
+    botonEditarActivo = botonEditar;
 
     document.getElementById("editar-Marca").value = obtenerValor(auto, "marca");
     document.getElementById("editar-Modelo").value = obtenerValor(auto, "modelo");
@@ -75,8 +77,9 @@ function abrirModalEdicion(auto) {
     document.getElementById("editar-stock").value = obtenerValor(auto, "disponible") ? "Disponible" : "No Disponible";
 
     document.getElementById("form-editar-auto").dataset.autoId = obtenerValor(auto, "autoId");
-    const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modal-editar-auto"));
-    modal.show();
+    const modalElement = document.getElementById("modal-editar-auto");
+    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+    modal.show(botonEditarActivo);
 }
 
 function eliminarAuto(autoId) {
@@ -166,5 +169,13 @@ document.getElementById("autoCuestionario").addEventListener("submit", (event) =
 });
 
 document.getElementById("form-editar-auto").addEventListener("submit", guardarEdicionAuto);
+
+document.getElementById("modal-editar-auto").addEventListener("hide.bs.modal", (event) => {
+    const modal = event.currentTarget;
+
+    if (modal.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
+});
 
 obtenerDatos();
