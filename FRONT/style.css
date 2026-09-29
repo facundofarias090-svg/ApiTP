@@ -41,3 +41,21 @@
   background-color: #5e5c5c;
   color: rgb(12, 12, 12);
 }
+
+.bienvenida > .row {
+  margin: 0;
+}
+
+#autosTable {
+  min-width: 760px;
+}
+
+@media (max-width: 575.98px) {
+  .bienvenida h1 {
+    font-size: 1.5rem;
+  }
+
+  .cuestionario .boton {
+    width: 100%;
+  }
+}

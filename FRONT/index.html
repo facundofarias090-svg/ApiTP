@@ -32,7 +32,7 @@
 
             <div class="col-md-3">
                 <label for="modelo" class="form-label">Modelo:</label>
-                <input type="text" class="form-control" id="modelo" required>
+                <input type="text" class="form-control" id="modelo" required minlength="3">
             </div>
 
             <div class="col-md-3">
@@ -47,7 +47,7 @@
 
             <div class="col-md-3">
                 <label for="kilometraje" class="form-label">Kilometraje:</label>
-                <input type="number" class="form-control" id="kilometraje" required>
+                <input type="number" class="form-control" id="kilometraje" required  min="0">
             </div>
 
             <div class="col-md-3">
@@ -66,23 +66,25 @@
 
     <section class="listado">
         <h2 class="espacio">Listado de Autos</h2>
-        <table class="table table-striped" id="autosTable">
-            <thead>
-                <tr>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Año</th>
-                    <th>Patente</th>
-                    <th>Kilometraje</th>
-                    <th>Fecha Ingreso</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="autosTableBody">
-                <!--  -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped" id="autosTable">
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Año</th>
+                        <th>Patente</th>
+                        <th>Kilometraje</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="autosTableBody">
+                    <!--  -->
+                </tbody>
+            </table>
+        </div>
     </section>
 
 <!-- modal -->
@@ -112,7 +114,7 @@
                                     <label for="editar-Año" class="form-label">Año</label>
                                     <input type="text" id="editar-Año" class="form-control" required>
                                 </div>
-                                <div class="mb-3">
+                                <div class="col-12 col-md-6 mb-3">
                                     <label for="editar-Patente" class="form-label">Patente</label>
                                     <input type="text" id="editar-Patente" class="form-control" required>
                                 </div>
