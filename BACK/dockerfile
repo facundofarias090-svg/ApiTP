@@ -4,7 +4,8 @@ WORKDIR /src
 
 # Copiar el código y compilar
 COPY . .
-RUN dotnet publish -c Release -o /app
+# Reemplaza la línea 7 por el archivo .csproj exacto:
+RUN dotnet publish "ApiTP.csproj" -c Release -o /app
 
 # 2. Imagen final ligera para ejecutar la app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
