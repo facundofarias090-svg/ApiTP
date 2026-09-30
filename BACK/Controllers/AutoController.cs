@@ -99,6 +99,14 @@ namespace ApiTP.Controllers
                 return NotFound();
             }
 
+            if (auto.Disponible)
+            {
+                return Conflict(new
+                {
+                    message = "No se puede eliminar el auto porque está disponible. Cambie su estado a 'No Disponible' para poder eliminarlo."
+                });
+            }
+
             _context.Auto.Remove(auto);
             await _context.SaveChangesAsync();
 

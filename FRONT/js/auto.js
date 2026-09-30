@@ -18,15 +18,16 @@ function obtenerDatos() {
 function formatearFecha(fecha) {
     if (!fecha) return "";
 
+    const fechaISO = String(fecha).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (fechaISO) return `${fechaISO[3]}/${fechaISO[2]}/${fechaISO[1]}`;
+
     const fechaObj = new Date(fecha);
     if (Number.isNaN(fechaObj.getTime())) return "";
 
-    return fechaObj.toLocaleString("es-AR", {
+    return fechaObj.toLocaleDateString("es-AR", {
         day: "2-digit",
         month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
+        year: "numeric"
     });
 }
 
@@ -74,6 +75,7 @@ function abrirModalEdicion(auto, botonEditar) {
     document.getElementById("editar-Año").value = obtenerValor(auto, "año");
     document.getElementById("editar-Patente").value = obtenerValor(auto, "patente");
     document.getElementById("editar-Kilometraje").value = obtenerValor(auto, "kilometraje");
+    document.getElementById("editar-FechaIngreso").value = String(obtenerValor(auto, "fechaIngreso")).slice(0, 10);
     document.getElementById("editar-stock").value = obtenerValor(auto, "disponible") ? "Disponible" : "No Disponible";
 
     document.getElementById("form-editar-auto").dataset.autoId = obtenerValor(auto, "autoId");
@@ -87,13 +89,14 @@ function eliminarAuto(autoId) {
     if (!window.confirm("¿Desea eliminar este auto?")) return;
 
     fetch(`/api/Auto/${autoId}`, { method: "DELETE" })
-        .then(response => {
+        .then(async response => {
             if (!response.ok) {
-                throw new Error("Error al eliminar");
+                const error = await response.json().catch(() => ({}));
+                throw new Error(error.message || error.title || "Error al eliminar el auto.");
             }
             obtenerDatos();
         })
-        .catch(() => {});
+        .catch(error => window.alert(error.message));
 }
 
 function guardarEdicionAuto(event) {
@@ -109,7 +112,7 @@ function guardarEdicionAuto(event) {
         año: Number(document.getElementById("editar-Año").value),
         patente: document.getElementById("editar-Patente").value,
         kilometraje: Number(document.getElementById("editar-Kilometraje").value),
-        fechaIngreso: obtenerValor(autoEnEdicion, "fechaIngreso") || new Date().toISOString(),
+        fechaIngreso: `${document.getElementById("editar-FechaIngreso").value}T00:00:00`,
         disponible: document.getElementById("editar-stock").value === "Disponible"
     };
 
@@ -132,13 +135,17 @@ function guardarEdicionAuto(event) {
 }
 
 function agregarAuto() {
+    const fechaSeleccionada = document.getElementById("fechaIngreso").value;
+
+    if (!fechaSeleccionada) return;
+
     const nuevoAuto = {
         Marca: document.getElementById("marca").value,
         Modelo: document.getElementById("modelo").value,
         Año: Number(document.getElementById("anio").value),
         Patente: document.getElementById("patente").value,
         Kilometraje: Number(document.getElementById("kilometraje").value),
-        FechaIngreso: new Date().toISOString(),
+        FechaIngreso: `${fechaSeleccionada}T00:00:00`,
         Disponible: document.getElementById("estado").value === "Disponible"
     };
 

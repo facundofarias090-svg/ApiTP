@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\ApiTP.csproj": {}
+    "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\ApiTP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\ApiTP.csproj": {
+    "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\ApiTP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\ApiTP.csproj",
+        "projectUniqueName": "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\ApiTP.csproj",
         "projectName": "ApiTP",
-        "projectPath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\ApiTP.csproj",
+        "projectPath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\ApiTP.csproj",
         "packagesPath": "C:\\Users\\Facundo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\obj\\",
+        "outputPath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Facundo\\AppData\\Roaming\\NuGet\\NuGet.Config"
