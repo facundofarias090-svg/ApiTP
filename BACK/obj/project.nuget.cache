@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iIikScPKVUA=",
+  "dgSpecHash": "CP9ma3fVgDw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\back\\ApiTP.csproj",
+  "projectFilePath": "C:\\Users\\Facundo\\Desktop\\ApiTP\\BACK\\ApiTP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Facundo\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Facundo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
