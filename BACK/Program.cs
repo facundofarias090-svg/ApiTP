@@ -1,6 +1,8 @@
 using ApiTP.Data;
 using Microsoft.EntityFrameworkCore;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 var port = Environment.GetEnvironmentVariable("PORT");

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiTP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eac062c00d2244a54593d68176c1b06ddfa6826d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c3b8d57ae6d244fd0289dffb11ec376bb26b00f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiTP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiTP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
