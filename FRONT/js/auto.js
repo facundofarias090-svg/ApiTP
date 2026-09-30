@@ -3,7 +3,20 @@ let botonEditarActivo = null;
 
 const obtenerValor = (auto, clave) => auto?.[clave] ?? auto?.[clave.charAt(0).toUpperCase() + clave.slice(1)] ?? "";
 
+function mostrarMensaje(mensaje) {
+    const elemento = document.getElementById("mensajeEstado");
+    elemento.textContent = mensaje;
+    elemento.hidden = false;
+}
+
+function limpiarMensaje() {
+    const elemento = document.getElementById("mensajeEstado");
+    elemento.textContent = "";
+    elemento.hidden = true;
+}
+
 function obtenerDatos() {
+    limpiarMensaje();
     fetch("/api/Auto")
         .then(response => {
             if (!response.ok) {
@@ -12,7 +25,7 @@ function obtenerDatos() {
             return response.json();
         })
         .then(data => MostrarDatos(data))
-        .catch(() => {});
+        .catch(error => mostrarMensaje(`No se pudo cargar el listado: ${error.message}`));
 }
 
 function formatearFecha(fecha) {
@@ -85,7 +98,10 @@ function abrirModalEdicion(auto, botonEditar) {
 }
 
 function eliminarAuto(autoId) {
-    if (!autoId) return;
+    if (!autoId) {
+        mostrarMensaje("No se encontró el identificador del auto.");
+        return;
+    }
     if (!window.confirm("¿Desea eliminar este auto?")) return;
 
     fetch(`/api/Auto/${autoId}`, { method: "DELETE" })
@@ -96,14 +112,17 @@ function eliminarAuto(autoId) {
             }
             obtenerDatos();
         })
-        .catch(error => window.alert(error.message));
+        .catch(error => mostrarMensaje(error.message));
 }
 
 function guardarEdicionAuto(event) {
     event.preventDefault();
 
     const autoId = Number(document.getElementById("form-editar-auto").dataset.autoId || autoEnEdicion?.autoId || autoEnEdicion?.AutoId);
-    if (!autoId) return;
+    if (!autoId) {
+        mostrarMensaje("No se encontró el identificador del auto.");
+        return;
+    }
 
     const autoActualizado = {
         autoId,
@@ -126,12 +145,12 @@ function guardarEdicionAuto(event) {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error("Error al actualizar");
+                throw new Error(`No se pudo actualizar el auto (HTTP ${response.status}).`);
             }
             bootstrap.Modal.getOrCreateInstance(document.getElementById("modal-editar-auto")).hide();
             obtenerDatos();
         })
-        .catch(() => {});
+        .catch(error => mostrarMensaje(error.message));
 }
 
 function agregarAuto() {
@@ -159,7 +178,7 @@ function agregarAuto() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error();
+                throw new Error(`No se pudo agregar el auto (HTTP ${response.status}).`);
             }
             return response.json();
         })
@@ -167,7 +186,7 @@ function agregarAuto() {
             document.getElementById("autoCuestionario").reset();
             obtenerDatos();
         })
-        .catch(() => {});
+        .catch(error => mostrarMensaje(error.message));
 }
 
 document.getElementById("autoCuestionario").addEventListener("submit", (event) => {
