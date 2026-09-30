@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://apitp-api.onrender.com";
+
 let autoEnEdicion = null;
 let botonEditarActivo = null;
 
@@ -17,7 +19,7 @@ function limpiarMensaje() {
 
 function obtenerDatos() {
     limpiarMensaje();
-    fetch("/api/Auto")
+    fetch(`${API_BASE_URL}/api/Auto`)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Error al obtener los datos: " + response.status);
@@ -104,7 +106,7 @@ function eliminarAuto(autoId) {
     }
     if (!window.confirm("¿Desea eliminar este auto?")) return;
 
-    fetch(`/api/Auto/${autoId}`, { method: "DELETE" })
+    fetch(`${API_BASE_URL}/api/Auto/${autoId}`, { method: "DELETE" })
         .then(async response => {
             if (!response.ok) {
                 const error = await response.json().catch(() => ({}));
@@ -135,7 +137,7 @@ function guardarEdicionAuto(event) {
         disponible: document.getElementById("editar-stock").value === "Disponible"
     };
 
-    fetch(`/api/Auto/${autoId}`, {
+    fetch(`${API_BASE_URL}/api/Auto/${autoId}`, {
         method: "PUT",
         headers: {
             accept: "application/json",
@@ -168,7 +170,7 @@ function agregarAuto() {
         Disponible: document.getElementById("estado").value === "Disponible"
     };
 
-    fetch("/api/Auto", {
+    fetch(`${API_BASE_URL}/api/Auto`, {
         method: "POST",
         headers: {
             accept: "application/json",
