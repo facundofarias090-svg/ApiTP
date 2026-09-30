@@ -42,6 +42,15 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.ExecuteSqlRaw(@"
+        CREATE TABLE IF NOT EXISTS ""Auto"" (
+            ""Id"" SERIAL PRIMARY KEY,
+            ""Marca"" TEXT,
+            ""Modelo"" TEXT,
+            ""Anio"" INT,
+            ""Precio"" NUMERIC
+        );
+    ");
     context.Database.EnsureCreated();
 }
 
