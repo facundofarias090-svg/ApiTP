@@ -1,6 +1,5 @@
 using ApiTP.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,20 +27,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-var frontEndPath = Path.Combine(builder.Environment.ContentRootPath, "..", "FRONT");
-
-app.UseDefaultFiles(new DefaultFilesOptions
-{
-    FileProvider = new PhysicalFileProvider(frontEndPath),
-    RequestPath = ""
-});
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(frontEndPath),
-    RequestPath = ""
-});
 
 if (app.Environment.IsDevelopment())
 {
