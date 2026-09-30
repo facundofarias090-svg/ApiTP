@@ -1,8 +1,5 @@
 const API_BASE_URL = "https://apitp-api.onrender.com";
 
-let autoEnEdicion = null;
-let botonEditarActivo = null;
-
 const obtenerValor = (auto, clave) => auto?.[clave] ?? auto?.[clave.charAt(0).toUpperCase() + clave.slice(1)] ?? "";
 
 function mostrarMensaje(mensaje) {
@@ -17,17 +14,18 @@ function limpiarMensaje() {
     elemento.hidden = true;
 }
 
-function obtenerDatos() {
+async function obtenerDatos() {
     limpiarMensaje();
-    fetch(`${API_BASE_URL}/api/Auto`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Error al obtener los datos: " + response.status);
-            }
-            return response.json();
-        })
-        .then(data => MostrarDatos(data))
-        .catch(error => mostrarMensaje(`No se pudo cargar el listado: ${error.message}`));
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/Auto`);
+        if (!response.ok) {
+            throw new Error(`Error al obtener los datos: ${response.status}`);
+        }
+        const datos = await response.json();
+        MostrarDatos(datos);
+    } catch (error) {
+        mostrarMensaje(`No se pudo cargar el listado: ${error.message}`);
+    }
 }
 
 function formatearFecha(fecha) {
@@ -44,15 +42,6 @@ function formatearFecha(fecha) {
         month: "2-digit",
         year: "numeric"
     });
-}
-
-function crearBoton(texto, clase, callback) {
-    const boton = document.createElement("button");
-    boton.type = "button";
-    boton.textContent = texto;
-    boton.className = clase;
-    boton.addEventListener("click", callback);
-    return boton;
 }
 
 function MostrarDatos(datos) {
@@ -74,17 +63,23 @@ function MostrarDatos(datos) {
         const tdAcciones = tr.insertCell(7);
         tdAcciones.className = "acciones-cell";
 
-        const btnEditar = crearBoton("Editar", "btn btn-primary btn-sm", (event) => abrirModalEdicion(auto, event.currentTarget));
-        const btnEliminar = crearBoton("Eliminar", "btn btn-danger btn-sm", () => eliminarAuto(autoId));
+        const btnEditar = document.createElement("button");
+        btnEditar.type = "button";
+        btnEditar.textContent = "Editar";
+        btnEditar.className = "btn btn-primary btn-sm";
+        btnEditar.addEventListener("click", (event) => abrirModalEdicion(auto, event.currentTarget));
+
+        const btnEliminar = document.createElement("button");
+        btnEliminar.type = "button";
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.className = "btn btn-danger btn-sm";
+        btnEliminar.addEventListener("click", () => eliminarAuto(autoId));
 
         tdAcciones.append(btnEditar, btnEliminar);
     });
 }
 
 function abrirModalEdicion(auto, botonEditar) {
-    autoEnEdicion = auto;
-    botonEditarActivo = botonEditar;
-
     document.getElementById("editar-Marca").value = obtenerValor(auto, "marca");
     document.getElementById("editar-Modelo").value = obtenerValor(auto, "modelo");
     document.getElementById("editar-Año").value = obtenerValor(auto, "año");
@@ -96,31 +91,32 @@ function abrirModalEdicion(auto, botonEditar) {
     document.getElementById("form-editar-auto").dataset.autoId = obtenerValor(auto, "autoId");
     const modalElement = document.getElementById("modal-editar-auto");
     const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-    modal.show(botonEditarActivo);
+    modal.show(botonEditar);
 }
 
-function eliminarAuto(autoId) {
+async function eliminarAuto(autoId) {
     if (!autoId) {
         mostrarMensaje("No se encontró el identificador del auto.");
         return;
     }
     if (!window.confirm("¿Desea eliminar este auto?")) return;
 
-    fetch(`${API_BASE_URL}/api/Auto/${autoId}`, { method: "DELETE" })
-        .then(async response => {
-            if (!response.ok) {
-                const error = await response.json().catch(() => ({}));
-                throw new Error(error.message || error.title || "Error al eliminar el auto.");
-            }
-            obtenerDatos();
-        })
-        .catch(error => mostrarMensaje(error.message));
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/Auto/${autoId}`, { method: "DELETE" });
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({}));
+            throw new Error(error.message || error.title || "Error al eliminar el auto.");
+        }
+        obtenerDatos();
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
 }
 
-function guardarEdicionAuto(event) {
+async function guardarEdicionAuto(event) {
     event.preventDefault();
 
-    const autoId = Number(document.getElementById("form-editar-auto").dataset.autoId || autoEnEdicion?.autoId || autoEnEdicion?.AutoId);
+    const autoId = Number(document.getElementById("form-editar-auto").dataset.autoId);
     if (!autoId) {
         mostrarMensaje("No se encontró el identificador del auto.");
         return;
@@ -137,25 +133,23 @@ function guardarEdicionAuto(event) {
         disponible: document.getElementById("editar-stock").value === "Disponible"
     };
 
-    fetch(`${API_BASE_URL}/api/Auto/${autoId}`, {
-        method: "PUT",
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(autoActualizado)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`No se pudo actualizar el auto (HTTP ${response.status}).`);
-            }
-            bootstrap.Modal.getOrCreateInstance(document.getElementById("modal-editar-auto")).hide();
-            obtenerDatos();
-        })
-        .catch(error => mostrarMensaje(error.message));
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/Auto/${autoId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(autoActualizado)
+        });
+        if (!response.ok) {
+            throw new Error(`No se pudo actualizar el auto (HTTP ${response.status}).`);
+        }
+        bootstrap.Modal.getOrCreateInstance(document.getElementById("modal-editar-auto")).hide();
+        obtenerDatos();
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
 }
 
-function agregarAuto() {
+async function agregarAuto() {
     const fechaSeleccionada = document.getElementById("fechaIngreso").value;
 
     if (!fechaSeleccionada) return;
@@ -170,25 +164,20 @@ function agregarAuto() {
         Disponible: document.getElementById("estado").value === "Disponible"
     };
 
-    fetch(`${API_BASE_URL}/api/Auto`, {
-        method: "POST",
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(nuevoAuto)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`No se pudo agregar el auto (HTTP ${response.status}).`);
-            }
-            return response.json();
-        })
-        .then(() => {
-            document.getElementById("autoCuestionario").reset();
-            obtenerDatos();
-        })
-        .catch(error => mostrarMensaje(error.message));
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/Auto`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nuevoAuto)
+        });
+        if (!response.ok) {
+            throw new Error(`No se pudo agregar el auto (HTTP ${response.status}).`);
+        }
+        document.getElementById("autoCuestionario").reset();
+        obtenerDatos();
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
 }
 
 document.getElementById("autoCuestionario").addEventListener("submit", (event) => {
