@@ -5,7 +5,7 @@
 namespace ApiTP.Migrations
 {
     /// <inheritdoc />
-    public partial class ultimocommitojala : Migration
+    public partial class postgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
